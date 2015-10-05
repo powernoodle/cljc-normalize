@@ -16,16 +16,15 @@ Add the following dependency to your project.clj file:
 ```clojure
 (ns example
   (:require [hiccup.page :refer [html5]]
-            [garden.core :refer [css]]
             [normalize.core :refer [normalize]]))
 
 (defn index []
   (html5 {:lang "en"}
          [:head
                 [:title "Hello World"]
-                [:style (css normalize)]]
+                [:style normalize]]
          [:body
                 [:h1 "hello world!"]]))
 ```
 
-The above example contains an `index` function that will generate HTML including an inline `<style>` tag containing the normalize styles. Alternatively, you can choose to render this content to an external file.
+The above example contains an `index` function that will generate HTML including an internal `<style>` tag containing the normalize styles. Alternatively, you can choose to render this content to an external file.
