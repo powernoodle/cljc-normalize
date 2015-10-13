@@ -111,14 +111,14 @@
             "2. Correct inability to style clickable `input` types in iOS."
             "3. Improve usability and consistency of cursor style between image-type `input` and others.")
    [:button
-    :html ["input[type=\"button\"]"] ;1
+    ["html input[type=\"button\"]"] ;1
     "input[type=\"reset\"]"
     "input[type=\"submit\"]" {:-webkit-appearance "button" ;2
                               :cursor "pointer" ;3
                               }]
    (comment "Re-set default cursor for disabled elements.")
    ["button[disabled]"
-    :html ["input[disabled]"] {:cursor "pointer"}]
+    ["html input[disabled]"] {:cursor "pointer"}]
    (comment "Remove inner padding and border in Firefox 4+.")
    ["button::-moz-focus-inner"
     "input::-moz-focus-inner" {:border 0
