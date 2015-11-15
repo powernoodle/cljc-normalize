@@ -168,15 +168,18 @@
    [:td :th {:padding 0}]])
 
 (def normalize
-  (css [base
-        html5
-        links
-        text
-        embedded
-        grouping
-        forms
-        tables]))
+  [base
+   html5
+   links
+   text
+   embedded
+   grouping
+   forms
+   tables])
+
+(def normalize-css
+  (css normalize))
 
 (defn -main
   []
-  (println normalize))
+  (println normalize-css))
