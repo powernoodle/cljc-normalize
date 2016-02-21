@@ -21,15 +21,14 @@
             "Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox."
             "Correct `block` display not defined for `main` in IE 11.")
    [:article :aside :details :figcaption
-    :figure :footer :header :hgroup :main
+    :figure :footer :header :main
     :menu :nav :section :summary {:display "block"}]
    (comment "1. Correct `inline-block` display not defined in IE 8/9."
             "2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.")
    [:audio :canvas :progress :video {:display "inline-block" ;1
                                      :vertical-align "baseline" ;2
                                      }]
-   (comment "Prevent modern browsers from displaying `audio` without controls."
-            "Remove excess height in iOS 5 devices.")
+   (comment "Prevent displaying `audio` without controls in Mobile Safari 4/5/6/7.")
    ["audio:not([controls])" {:display "none"
                              :height 0}]
    (comment "Address `[hidden]` styling not present in IE 8/9/10."
@@ -46,17 +45,26 @@
 
 (def text
   "Text-level semantics"
-  [(comment "Address styling not present in IE 8/9/10/11, Safari, and Chrome.")
-   ["abbr[title]" {:border-bottom [(px 1) "dotted"]}]
-   (comment "Address style set to `bolder` in Firefox 4+, Safari, and Chrome.")
-   [:b :strong {:font-weight "bold"}]
+  [(comment "Address inconsistent styling of `abbr[title]`."
+            "1. Correct styling in Firefox 39 and Opera 12."
+            "2. Correct missing styling in Chrome, Edge, IE, Opera, and Safari.")
+   ["abbr[title]" {:border-bottom "none" ;1
+                   :text-decoration "underline" ;2
+                   }
+                  {:text-decoration "underline dotted"} ;2
+                  ]
+   (comment "Address inconsistent styling of b and strong."
+            "1. Correct duplicate application of `bolder` in Safari 6.0.2."
+            "2. Correct style set to `bold` in Edge 12+, Safari 6.2+, and Chrome 18+.")
+   [:b :strong {:font-weight "inherit"}] ;1
+   [:b :strong {:font-weight "bolder"}] ;2
    (comment "Address styling not present in Safari and Chrome.")
    [:dfn {:font-style "italic"}]
    (comment "Address variable `h1` font-size and margin within `section` and `article` contexts in Firefox 4+, Safari, and Chrome.")
    [:h1 {:font-size (em 2)
          :margin [(em 0.67) 0]}]
    (comment "Address styling not present in IE 8/9.")
-   [:mark {:background (rgb 255 255 0)
+   [:mark {:background-color (rgb 255 255 0)
            :color (rgb 0 0 0)}]
    (comment "Address inconsistent and variable font size in all browsers.")
    [:small {:font-size (percent 80)}]
@@ -80,25 +88,27 @@
   [(comment "Address margin not present in IE 8/9 and Safari.")
    [:figure {:margin [(em 1)
                       (px 40)]}]
-   (comment "Address differences between Firefox and other browsers.")
-   [:hr {:box-sizing "content-box"
-         :height 0}]
+   (comment "Address inconsistent styling of `hr`."
+            "1. Correct `box-sizing` set to `border-box` in Firefox."
+            "2. Correct `overflow` set to `hidden` in IE 8/9/10/11 and Edge 12.")
+   [:hr {:height 0 ;1
+         :overflow "visible" ;2
+         }]
    (comment "Contain overflow in all browsers.")
    [:pre {:overflow "auto"}]
-   (comment "Address odd `em`-unit font size rendering in all browsers.")
-   [:code :kbd :pre :samp {:font-family "monospace, monospace"
-                           :font-size (em 1)}]])
+   (comment "1. Correct inheritance and scaling of font-size for preformatted text."
+            "2. Address odd `em`-unit font size rendering in all browsers.")
+   [:code :kbd :pre :samp {:font-family "monospace, monospace" ;1
+                           :font-size (em 1) ;2
+                           }]])
 
 (def forms
   "Forms"
   [(comment "Known limitation: by default, Chrome and Safari on OS X allow very limited styling of `select`, unless a `border` property is set."
-            "1. Correct color not being inherited."
-            "Known issue: affects color of disabled elements."
-            "2. Correct font properties not being inherited."
-            "3. Address margins set differently in Firefox 4+, Safari, and Chrome.")
-   [:button :input :optgroup :select :textarea {:color "inherit" ;1
-                                                :font "inherit" ;2
-                                                :margin 0 ;3
+            "1. Correct font properties not being inherited."
+            "2. Address margins set differently in Firefox 4+, Safari, and Chrome.")
+   [:button :input :optgroup :select :textarea {:font "inherit" ;1
+                                                :margin 0 ;2
                                                 }]
    (comment "Address `overflow` set to `hidden` in IE 8/9/10/11.")
    [:button {:overflow "visible"}]
@@ -123,6 +133,9 @@
    ["button::-moz-focus-inner"
     "input::-moz-focus-inner" {:border 0
                                :padding 0}]
+   (comment "Replace focus style removed in the border reset above")
+   ["button::-moz-focusring"
+    "input::-moz-focusring" {:outline "1px dotted ButtonText"}]
    (comment "Address Firefox 4+ setting `line-height` on `input` using `!important` in the UA stylesheet.")
    [:input {:line-height "normal"}]
    (comment "It's recommended that you don't attempt to style these elements."
@@ -136,11 +149,8 @@
    (comment "Fix the cursor style for Chrome's increment/decrement buttons. For certain `font-size` values of the `input`, it causes the cursor style of the decrement button to change from `default` to `text`.")
    ["input[type=\"number\"]::-webkit-inner-spin-button"
     "input[type=\"number\"]::-webkit-outer-spin-button" {:height "auto"}]
-   (comment "1. Address `appearance` set to `searchfield` in Safari and Chrome."
-            "2. Address `box-sizing` set to `border-box` in Safari and Chrome.")
-   ["input[type=\"search\"]" {:-webkit-appearance "textfield" ;1
-                              :box-sizing "content-box" ;2
-                              }]
+   (comment "Address `appearance` set to `searchfield` in Safari and Chrome.")
+   ["input[type=\"search\"]" {:-webkit-appearance "textfield"}]
    (comment "Remove inner padding and search cancel button in Safari and Chrome on OS X."
             "Safari (but not Chrome) clips the cancel button when the search input has padding (and `textfield` appearance).")
    ["input[type=\"search\"]::-webkit-search-cancel-button"
@@ -160,13 +170,6 @@
             "NOTE: the default cannot safely be changed in Chrome and Safari on OS X.")
    [:optgroup {:font-weight "bold"}]])
 
-(def tables
-  "Tables
-  Remove most spacing between table cells."
-  [[:table {:border-collapse "collapse"
-            :border-spacing 0}]
-   [:td :th {:padding 0}]])
-
 (def normalize
   [base
    html5
@@ -174,8 +177,7 @@
    text
    embedded
    grouping
-   forms
-   tables])
+   forms])
 
 (def normalize-css
   (css normalize))
