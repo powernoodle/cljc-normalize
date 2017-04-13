@@ -1,186 +1,270 @@
 (ns normalize.core
   (:require [garden.core :refer [css]]
+            [garden.color :as color]
             [garden.selectors :as s]
             [garden.color :refer [rgb]]
             [garden.units :refer [em px percent]]))
 
-(def base
-  "normalize.css v3.0.3"
-  [(comment "1. Set default font family to sans-serif."
-            "2. Prevent iOS and IE text size adjust after device orientation change, without disabling user zoom.")
-   [:html {:font-family "sans-serif" ;1
-           :-ms-text-size-adjust (percent 100) ;2
-           :-webkit-text-size-adjust (percent 100) ;2
-           }]
-   (comment "Remove default margin.")
-   [:body {:margin 0}]])
+(s/defpseudoclass   -moz-focusring)
+(s/defpseudoelement -moz-focus-inner)
+(s/defpseudoelement -webkit-file-upload-button)
+(s/defpseudoelement -webkit-inner-spin-button)
+(s/defpseudoelement -webkit-outer-spin-button)
+(s/defpseudoelement -webkit-search-cancel-button)
+(s/defpseudoelement -webkit-search-decoration)
 
-(def html5
-  "HTML5 display definitions."
-  [(comment "Correct `block` display not defined for any HTML5 element in IE 8/9."
-            "Correct `block` display not defined for `details` or `summary` in IE 10/11 and Firefox."
-            "Correct `block` display not defined for `main` in IE 11.")
-   [:article :aside :details :figcaption
-    :figure :footer :header :main
-    :menu :nav :section :summary {:display "block"}]
-   (comment "1. Correct `inline-block` display not defined in IE 8/9."
-            "2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.")
-   [:audio :canvas :progress :video {:display "inline-block" ;1
-                                     :vertical-align "baseline" ;2
-                                     }]
-   (comment "Prevent displaying `audio` without controls in Mobile Safari 4/5/6/7.")
-   ["audio:not([controls])" {:display "none"
-                             :height 0}]
-   (comment "Address `[hidden]` styling not present in IE 8/9/10."
-            "Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.")
-   ["[hidden]" :template {:display "none"}]])
+(def document
+  [(comment "1. Correct the line height in all browsers."
+            "2. Prevent adjustments of font size after orientation changes in"
+            "   IE on Windows Phone and in iOS.")
+   [:html {:line-height 1.15
+           :-ms-text-size-adjust (percent 100)
+           :-webkit-text-size-adjust (percent 100)}]])
 
-(def links
-  "Links"
-  [(comment "Remove the gray background color from active links in IE 10.")
-   [:a {:background-color "transparent"}]
-   (comment "Improve readability of focused elements when they are also in an active/hover state.")
-   [:a [:&:active]
-       [:&:hover] {:outline 0}]])
+(def sections
+  [(comment "Add the correct display in IE 9-.")
+   [:article :aside :footer :header :nav :section
+    {:display "block"}]
+   (comment "Correct the font size and margin on `h1` elements within `section`"
+            "and `article` contexts in Chrome, Firefox, and Safari.")
+   [:h1
+    {:font-size (em 2)
+     :margin [[(em 0.67) 0]]}]])
 
-(def text
-  "Text-level semantics"
-  [(comment "Address inconsistent styling of `abbr[title]`."
-            "1. Correct styling in Firefox 39 and Opera 12."
-            "2. Correct missing styling in Chrome, Edge, IE, Opera, and Safari.")
-   ["abbr[title]" {:border-bottom "none" ;1
-                   :text-decoration "underline" ;2
-                   }
-                  {:text-decoration "underline dotted"} ;2
-                  ]
-   (comment "Address inconsistent styling of b and strong."
-            "1. Correct duplicate application of `bolder` in Safari 6.0.2."
-            "2. Correct style set to `bold` in Edge 12+, Safari 6.2+, and Chrome 18+.")
-   [:b :strong {:font-weight "inherit"}] ;1
-   [:b :strong {:font-weight "bolder"}] ;2
-   (comment "Address styling not present in Safari and Chrome.")
-   [:dfn {:font-style "italic"}]
-   (comment "Address variable `h1` font-size and margin within `section` and `article` contexts in Firefox 4+, Safari, and Chrome.")
-   [:h1 {:font-size (em 2)
-         :margin [(em 0.67) 0]}]
-   (comment "Address styling not present in IE 8/9.")
-   [:mark {:background-color (rgb 255 255 0)
-           :color (rgb 0 0 0)}]
-   (comment "Address inconsistent and variable font size in all browsers.")
-   [:small {:font-size (percent 80)}]
-   (comment "Prevent `sub` and `sup` affecting `line-height` in all browsers.")
-   [:sub :sup {:font-size (percent 75)
-               :line-height 0
-               :position "relative"
-               :vertical-align "baseline"}]
-   [:sup {:top (em -0.5)}]
-   [:sub {:bottom (em -0.25)}]])
+(def grouping-content
+  [(comment "Add the correct display in IE 9-."
+            "1. Add the correct display in IE.")
+   [:figcaption :figure :main
+    {;; 1
+     :display :block}]
+   (comment "Add the correct margin in IE 8.")
+   [:figure
+    {:margin [[(em 1) (px 40)]]}]
+   (comment "1. Add the correct box sizing in Firefox."
+            "2. Show the overflow in Edge and IE.")
+   [:hr
+    {;; 1
+     :box-sizing :content-box
+     ;; 1
+     :height 0
+     ;; 2
+     :overflow :visible}]
+   (comment
+     "1. Correct the inheritance and scaling of font size in all browsers."
+     "2. Correct the odd `em` font sizing in all browsers.")
+   [:pre
+    {;; 1
+     :font-family [:monospace :monospace]
+     ;; 2
+     :font-size (em 1)}]])
 
-(def embedded
-  "Embedded content"
-  [(comment "Remove border when inside `a` element in IE 8/9/10.")
-   [:img {:border 0}]
-   (comment "Correct overflow not hidden in IE 9/10/11.")
-   ["svg:not(:root)" {:overflow "hidden"}]])
+(def text-level-semantics
+  [(comment "1. Remove the gray background on active links in IE 10."
+            "2. Remove gaps in links underline in iOS 8+ and Safari 8+.")
+   [:a
+    {;; 1
+     :background-color :transparent
+     ;; 2
+     :-webkit-text-decoration-skip :objects}]
+   (comment "1. Remove the bottom border in Chrome 57- and Firefox 39-."
+            "2. Add the correct text decoration in"
+            "   Chrome, Edge, IE, Opera, and Safari.")
+   [(s/abbr (s/attr :title))
+    {;; 1
+     :border-bottom :none
+     ;; 2
+     :text-decoration :underline}
+    {;; 2
+     :text-decoration [[:underline :dotted]]
+     }]
+   (comment "Prevent the duplicate application of `bolder` by the next"
+            "rule in Safari 6.")
+   [:b :strong
+    {:font-weight :inherit}]
+   (comment "Add the correct font weight in Chrome, Edge, and Safari.")
+   [:b :strong
+    {:font-weight :bolder}]
+   (comment
+     "1. Correct the inheritance and scaling of font size in all browsers."
+     "2. Correct the odd `em` font sizing in all browsers.")
+   [:code :kbd :samp
+    {;; 1
+     :font-family [:monospace :monospace]
+     ;; 2
+     :font-size (em 1)}]
+   (comment "Add the correct font style in Android 4.3-.")
+   [:dfn
+    {:font-style :italic}]
+   (comment "Add the correct background and color in IE 9-.")
+   [:mark
+    {:background-color (-> (color/rgb [255 255 0]) color/as-hex)
+     :color (-> (color/rgb [0 0 0]) color/as-hex)}]
+   (comment "Add the correct font size in all browsers.")
+   [:small
+    {:font-size (percent 80)}]
+   (comment "Prevent `sub` and `sup` elements from affecting the line height"
+            "in all browsers.")
+   [:sub :sup
+    {:font-size (percent 75)
+     :line-height 0
+     :position :relative
+     :vertical-align :baseline}]
+   [:sub
+    {:bottom (em -0.25)}]
+   [:sup
+    {:top (em -0.5)}]])
 
-(def grouping
-  "Grouping content"
-  [(comment "Address margin not present in IE 8/9 and Safari.")
-   [:figure {:margin [(em 1)
-                      (px 40)]}]
-   (comment "Address inconsistent styling of `hr`."
-            "1. Correct `box-sizing` set to `border-box` in Firefox."
-            "2. Correct `overflow` set to `hidden` in IE 8/9/10/11 and Edge 12.")
-   [:hr {:height 0 ;1
-         :overflow "visible" ;2
-         }]
-   (comment "Contain overflow in all browsers.")
-   [:pre {:overflow "auto"}]
-   (comment "1. Correct inheritance and scaling of font-size for preformatted text."
-            "2. Address odd `em`-unit font size rendering in all browsers.")
-   [:code :kbd :pre :samp {:font-family "monospace, monospace" ;1
-                           :font-size (em 1) ;2
-                           }]])
+(def embedded-content
+  [(comment "Add the correct display in IE 9-.")
+   [:audio :video
+    {:display :inline-block}]
+   (comment "Add the correct display in iOS 4-7.")
+   [(s/audio (s/not (s/attr :controls)))
+    {:display :none
+     :height 0}]
+   (comment "Remove the border on images inside links in IE 10-.")
+   [:img
+    {:border-style :none}]
+   (comment "Hide the overflow in IE.")
+   [(s/svg (s/not (s/root)))
+    {:overflow :hidden}]])
 
 (def forms
-  "Forms"
-  [(comment "Known limitation: by default, Chrome and Safari on OS X allow very limited styling of `select`, unless a `border` property is set."
-            "1. Correct font properties not being inherited."
-            "2. Address margins set differently in Firefox 4+, Safari, and Chrome.")
-   [:button :input :optgroup :select :textarea {:font "inherit" ;1
-                                                :margin 0 ;2
-                                                }]
-   (comment "Address `overflow` set to `hidden` in IE 8/9/10/11.")
-   [:button {:overflow "visible"}]
-   (comment "Address inconsistent `text-transform` inheritance for `button` and `select`."
-            "All other form control elements do not inherit `text-transform` values."
-            "Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera."
-            "Correct `select` style inheritance in Firefox.")
-   [:button :select {:text-transform "none"}]
-   (comment "1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio` and `video` controls."
-            "2. Correct inability to style clickable `input` types in iOS."
-            "3. Improve usability and consistency of cursor style between image-type `input` and others.")
+  [(comment "Remove the margin in Firefox and Safari.")
+   [:button :input :optgroup :select :textarea
+    {:margin 0}]
+   (comment "Show the overflow in IE."
+            "1. Show the overflow in Edge.")
+   [:button :input
+    {;; 1
+     :overflow :visible}]
+   (comment "Remove the inheritance of text transform in Edge, Firefox, and IE."
+            "1. Remove the inheritance of text transform in Firefox.")
+   [:button :select
+    {;; 1
+     :text-transform :none}]
+   (comment
+     "1. Prevent a WebKit bug where (2) destroys native `audio` and `video`"
+     "   controls in Android 4."
+     "2. Correct the inability to style clickable types in iOS and Safari.")
    [:button
-    ["html input[type=\"button\"]"] ;1
-    "input[type=\"reset\"]"
-    "input[type=\"submit\"]" {:-webkit-appearance "button" ;2
-                              :cursor "pointer" ;3
-                              }]
-   (comment "Re-set default cursor for disabled elements.")
-   ["button[disabled]"
-    ["html input[disabled]"] {:cursor "pointer"}]
-   (comment "Remove inner padding and border in Firefox 4+.")
-   ["button::-moz-focus-inner"
-    "input::-moz-focus-inner" {:border 0
-                               :padding 0}]
-   (comment "Replace focus style removed in the border reset above")
-   ["button::-moz-focusring"
-    "input::-moz-focusring" {:outline "1px dotted ButtonText"}]
-   (comment "Address Firefox 4+ setting `line-height` on `input` using `!important` in the UA stylesheet.")
-   [:input {:line-height "normal"}]
-   (comment "It's recommended that you don't attempt to style these elements."
-            "Firefox's implementation doesn't respect box-sizing, padding, or width."
-            "1. Address box sizing set to `content-box` in IE 8/9/10."
-            "2. Remove excess padding in IE 8/9/10.")
-   ["input[type=\"checkbox\"]"
-    "input[type=\"radio\"]" {:box-sizing "border-box" ;1
-                             :padding 0 ;2
-                             }]
-   (comment "Fix the cursor style for Chrome's increment/decrement buttons. For certain `font-size` values of the `input`, it causes the cursor style of the decrement button to change from `default` to `text`.")
-   ["input[type=\"number\"]::-webkit-inner-spin-button"
-    "input[type=\"number\"]::-webkit-outer-spin-button" {:height "auto"}]
-   (comment "Address `appearance` set to `searchfield` in Safari and Chrome.")
-   ["input[type=\"search\"]" {:-webkit-appearance "textfield"}]
-   (comment "Remove inner padding and search cancel button in Safari and Chrome on OS X."
-            "Safari (but not Chrome) clips the cancel button when the search input has padding (and `textfield` appearance).")
-   ["input[type=\"search\"]::-webkit-search-cancel-button"
-    "input[type=\"search\"]::-webkit-search-decoration" {:-webkit-appearance "none"}]
-   (comment "Define consistent border, margin, and padding.")
-   [:fieldset {:border [(px 1) "solid" (rgb 192 192 192)]
-               :margin [0 (px 2)]
-               :padding [(em 0.35) (em 0.625) (em 0.75)]}]
-   (comment "1. Correct `color` not being inherited in IE 8/9/10/11."
-            "2. Remove padding so people aren't caught out if they zero out fieldsets.")
-   [:legend {:border 0 ;1
-             :padding 0 ;2
-             }]
-   (comment "Remove default vertical scrollbar in IE 8/9/10/11.")
-   [:textarea {:overflow "auto"}]
-   (comment "Don't inherit the `font-weight` (applied by a rule above)."
-            "NOTE: the default cannot safely be changed in Chrome and Safari on OS X.")
-   [:optgroup {:font-weight "bold"}]])
+    (s/html (s/attr= :type :button)) ;; 1
+    (s/attr= :type :reset)
+    (s/attr= :type :submit)
+    {;; 2
+     :-webkit-appearance :button}]
+   (comment "Remove the inner border and padding in Firefox.")
+   [(s/button -moz-focus-inner)
+    ((s/attr= :type :button) -moz-focus-inner)
+    ((s/attr= :type :reset) -moz-focus-inner)
+    ((s/attr= :type :submit) -moz-focus-inner)
+    {:border-style :none
+     :padding 0}]
+   (comment "Restore the focus styles unset by the previous rule.")
+   [(s/button -moz-focusring)
+    ((s/attr= :type :button) -moz-focusring)
+    ((s/attr= :type :reset) -moz-focusring)
+    ((s/attr= :type :submit) -moz-focusring)
+    {:outline [[(px 1) :dotted :ButtonText]]}]
+   (comment
+     "1. Correct the text wrapping in Edge and IE."
+     "2. Correct the color inheritance from `fieldset` elements in IE."
+     "3. Remove the padding so developers are not caught out when they zero out"
+     "   `fieldset` elements in all browsers.")
+   [:legend
+    {;; 1
+     :box-sizing :border-box
+     ;; 2
+     :color :inherit
+     ;; 1
+     :display :table
+     ;; 1
+     :max-width (percent 100)
+     ;; 3
+     :padding 0
+     ;; 1
+     :white-space :normal}]
+   (comment
+     "1. Add the correct display in IE 9-."
+     "2. Add the correct vertical alignment in Chrome, Firefox, and Opera.")
+   [:progress
+    {;; 1
+     :display :inline-block
+     ;; 2
+     :vertical-align :baseline}]
+   (comment "Remove the default vertical scrollbar in IE.")
+   [:textarea
+    {:overflow :auto}]
+   (comment "1. Add the correct box sizing in IE 10-."
+            "2. Remove the padding in IE 10-.")
+   [(s/attr= :type :checkbox)
+    (s/attr= :type :radio)
+    {;; 1
+     :box-sizing :border-box
+     ;; 2
+     :padding 0}]
+   (comment
+     "Correct the cursor style of increment and decrement buttons in Chrome.")
+   [((s/attr= :type :number) -webkit-inner-spin-button)
+    ((s/attr= :type :number) -webkit-outer-spin-button)
+    {:height :auto}]
+   (comment "1. Correct the odd appearance in Chrome and Safari."
+            "2. Correct the outline style in Safari.")
+   [(s/attr= :type :search)
+    {;; 1
+     :-webkit-appearance :textfield
+     ;; 2
+     :outline-offset (px -2)}]
+   (comment "Remove the inner padding and cancel buttons in Chrome"
+            "and Safari on macOS.")
+   [((s/attr= :type :search) -webkit-search-cancel-button)
+    ((s/attr= :type :search) -webkit-search-decoration)
+    {:-webkit-appearance :none}]
+   (comment
+     "1. Correct the inability to style clickable types in iOS and Safari."
+     "2. Change font properties to `inherit` in Safari.")
+   [-webkit-file-upload-button
+    {;; 1
+     :-webkit-appearance :button
+     ;; 2
+     :font :inherit}]])
+
+(def interactive
+  [(comment "Add the correct display in IE 9-."
+            "1. Add the correct display in Edge, IE, and Firefox.")
+   [:details ;;1
+    :menu
+    {:display :block}]
+   (comment "Add the correct display in all browsers.")
+   [:summary
+    {:display :list-item}]])
+
+(def scripting
+  [(comment "Add the correct display in IE 9-.")
+   [:canvas
+    {:display :inline-block}]
+   (comment "Add the correct display in IE.")
+   [:template
+    {:display :none}]])
+
+(def hidden
+  [(comment "Add the correct display in IE 10-.")
+   [(s/attr :hidden)
+    {:display :none}]])
 
 (def normalize
-  [base
-   html5
-   links
-   text
-   embedded
-   grouping
-   forms])
+  [document
+   sections
+   grouping-content
+   text-level-semantics
+   embedded-content
+   forms
+   interactive
+   scripting
+   hidden])
 
 (def normalize-css
-  (css normalize))
+  (css {:pretty-print? false} normalize))
 
 (defn -main
   []

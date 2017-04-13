@@ -7,7 +7,7 @@ A Clojure library that ports [normalize.css](http://necolas.github.io/normalize.
 Add the following dependency to your project.clj file:
 
 ```
-[normalize "0.1.3"]
+[com.powernoodle/normalize "6.0.0"]
 ```
 
 ## Example
@@ -20,8 +20,8 @@ To use with Garden just include the normalize css rules in your apps styles list
 
 (def app-styles
   [normalize
-   [:a {:text-decoration "none"}]
-   [:button {:text-transform "uppercase"}]])
+   [:a {:color "red"}]
+   [:span {:text-transform "uppercase"}]])
 ```
 
 You can also consume the raw css without Garden.
