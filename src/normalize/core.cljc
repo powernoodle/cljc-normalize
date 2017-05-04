@@ -22,7 +22,10 @@
            :-webkit-text-size-adjust (percent 100)}]])
 
 (def sections
-  [(comment "Add the correct display in IE 9-.")
+  [(comment "Remove the margin in all browsers (opinionated).")
+   [:body
+    {:margin 0}]
+   (comment "Add the correct display in IE 9-.")
    [:article :aside :footer :header :nav :section
     {:display "block"}]
    (comment "Correct the font size and margin on `h1` elements within `section`"
@@ -130,9 +133,17 @@
     {:overflow :hidden}]])
 
 (def forms
-  [(comment "Remove the margin in Firefox and Safari.")
+  [(comment "1. Change the font styles in all browsers (opinionated)."
+            "2. Remove the margin in Firefox and Safari.")
    [:button :input :optgroup :select :textarea
-    {:margin 0}]
+    {;; 1
+     :font-family "sans-serif"
+     ;; 1
+     :font-size (percent 100)
+     ;; 1
+     :line-height 1.15
+     ;; 2
+     :margin 0}]
    (comment "Show the overflow in IE."
             "1. Show the overflow in Edge.")
    [:button :input
@@ -166,6 +177,9 @@
     ((s/attr= :type :reset) -moz-focusring)
     ((s/attr= :type :submit) -moz-focusring)
     {:outline [[(px 1) :dotted :ButtonText]]}]
+   (comment "Correct the padding in Firefox.")
+   [:fieldset
+    {:padding [[(em 0.35) (em 0.75) (em 0.625)]]}]
    (comment
      "1. Correct the text wrapping in Edge and IE."
      "2. Correct the color inheritance from `fieldset` elements in IE."

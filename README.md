@@ -7,7 +7,7 @@ A Clojure library that ports [normalize.css](http://necolas.github.io/normalize.
 Add the following dependency to your project.clj file:
 
 ```
-[com.powernoodle/normalize "6.0.0"]
+[com.powernoodle/normalize "7.0.0"]
 ```
 
 ## Example
