@@ -4,7 +4,7 @@
             [normalize.core :refer [normalize-css]]))
 
 (def official-normalize
-  (-> (->> (slurp "resources/normalize v6.0.0.css")
+  (-> (->> (slurp "resources/normalize v7.0.0.css")
            string/trim-newline
            string/split-lines
            (map (comp string/trim string/trim-newline))
@@ -15,7 +15,8 @@
       (string/replace ", " ",")
       (string/replace "; " ";")
       (string/replace " [" "[")
-      (string/replace "0.67em" ".67em")
+      (string/replace #"0.(\d+)em" ".$1em")
+      (string/replace #"-.(\d+)em" "-0.$1em")
       (string/replace "bottom:none" "bottom:0")
       (string/replace #"/\*.+?\*/" "")
       (string/replace ";}" "}")))
