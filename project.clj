@@ -1,4 +1,4 @@
-(defproject com.powernoodle/normalize "7.0.0"
+(defproject com.powernoodle/normalize "8.0.0"
   :description "Clojure library that supplies normalize.css via Garden"
   :url "http://github.com/powernoodle/cljc-normalize"
   :license {:name "Copyright"
