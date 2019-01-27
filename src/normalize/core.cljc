@@ -24,6 +24,9 @@
   [(comment "Remove the margin in all browsers.")
    [:body
     {:margin 0}]
+   (comment "Render the `main` element consistently in IE.")
+   [:main
+    {:display :block}]
    (comment "Correct the font size and margin on `h1` elements within `section`"
             "and `article` contexts in Chrome, Firefox, and Safari.")
    [:h1

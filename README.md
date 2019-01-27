@@ -9,7 +9,7 @@ A Clojure library that ports
 Add the following dependency to your project.clj file:
 
 ```
-[com.powernoodle/normalize "8.0.0"]
+[com.powernoodle/normalize "8.0.1"]
 ```
 
 ## Example
