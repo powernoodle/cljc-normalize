@@ -4,7 +4,7 @@
             [normalize.core :refer [normalize-css]]))
 
 (def official-normalize
-  (-> (->> (slurp "resources/normalize v7.0.0.css")
+  (-> (->> (slurp "resources/normalize v8.0.1.css")
            string/trim-newline
            string/split-lines
            (map (comp string/trim string/trim-newline))

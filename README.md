@@ -1,18 +1,21 @@
 # normalize
 
-A Clojure library that ports [normalize.css](http://necolas.github.io/normalize.css/) to [Garden](https://github.com/noprompt/garden).
+A Clojure library that ports
+[normalize.css](http://necolas.github.io/normalize.css/) to
+[Garden](https://github.com/noprompt/garden).
 
 ## Usage
 
 Add the following dependency to your project.clj file:
 
 ```
-[com.powernoodle/normalize "7.0.0"]
+[com.powernoodle/normalize "8.0.1"]
 ```
 
 ## Example
 
-To use with Garden just include the normalize css rules in your apps styles list before your other styles and compile normally with Garden.
+To use with Garden just include the normalize css rules in your apps
+styles list before your other styles and compile normally with Garden.
 
 ```clojure
 (ns example
@@ -26,7 +29,10 @@ To use with Garden just include the normalize css rules in your apps styles list
 
 You can also consume the raw css without Garden.
 
-This example contains an `index` function that will generate HTML including an internal `<style>` tag containing the normalize styles. Alternatively, you can choose to render this content to an external file.
+This example contains an `index` function that will generate HTML
+including an internal `<style>` tag containing the normalize
+styles. Alternatively, you can choose to render this content to an
+external file.
 
 ```clojure
 (ns example
